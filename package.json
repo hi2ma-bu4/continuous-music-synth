@@ -1,0 +1,28 @@
+{
+  "name": "continuous-music-synth",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "hi2ma-bu4",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "tone": "^14.8.49"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.14"
+  },
+  "volta": {
+    "node": "24.16.0",
+    "npm": "11.15.0"
+  }
+}
