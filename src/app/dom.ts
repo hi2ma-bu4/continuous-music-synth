@@ -29,7 +29,7 @@ export function renderAppShell(root: HTMLDivElement): void {
 	root.innerHTML = `
         <button id="menuButton">☰</button>
 
-        <div id="uiPanel" class="closed">
+        <div id="uiPanel">
             <div class="panelInner">
                 <div class="row">
                     <button id="transportButton">START</button>
@@ -65,19 +65,20 @@ export function renderAppShell(root: HTMLDivElement): void {
                     </div>
                 </div>
 
-                <div class="row">
-                    KEY:
-                    <span id="keyText" class="value">C</span>
-
-                    <br><br>
-
-                    CHORD:
-                    <span id="chordText" class="value">I</span>
-                </div>
-
                 <div class="legend">
                     ${legend}
                 </div>
+            </div>
+        </div>
+
+        <div id="statusHud" aria-live="polite">
+            <div class="statusCard">
+                <span class="statusLabel">KEY</span>
+                <span id="keyText" class="value statusValue">C</span>
+            </div>
+            <div class="statusCard">
+                <span class="statusLabel">CHORD</span>
+                <span id="chordText" class="value statusValue">I</span>
             </div>
         </div>
 

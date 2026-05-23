@@ -1,4 +1,4 @@
-import type { Compressor, Limiter, MembraneSynth, MetalSynth, MonoSynth, NoiseSynth, PolySynth, Reverb, Synth } from "tone";
+import type { Compressor, Limiter, MembraneSynth, MetalSynth, MonoSynth, NoiseSynth, PolySynth, Reverb } from "tone";
 
 import { BPM, TIME_SIGNATURE } from "../constants";
 import { RHYTHMS } from "../data";
@@ -13,13 +13,13 @@ export interface AudioEngineCallbacks {
 }
 
 interface AudioNodes {
-	arp: Synth;
+	arp: PolySynth;
 	bass: MonoSynth;
 	brass: PolySynth;
 	compressor: Compressor;
 	hat: MetalSynth;
 	kick: MembraneSynth;
-	lead: Synth;
+	lead: PolySynth;
 	limiter: Limiter;
 	reverb: Reverb;
 	snare: NoiseSynth;
@@ -171,7 +171,7 @@ export class AudioEngine {
 			volume: -17,
 		}).connect(compressor);
 
-		const lead = new tone.Synth({
+		const lead = new tone.PolySynth(tone.Synth, {
 			envelope: {
 				attack: 0.015,
 				decay: 0.05,
@@ -184,7 +184,7 @@ export class AudioEngine {
 			volume: -10,
 		}).connect(compressor);
 
-		const arp = new tone.Synth({
+		const arp = new tone.PolySynth(tone.Synth, {
 			envelope: {
 				attack: 0.003,
 				decay: 0.025,
@@ -436,15 +436,37 @@ export class AudioEngine {
 			}
 
 			if (bar.kime) {
-				this.nodes.kick.triggerAttackRelease("C1", "4n", time + quarterNoteSeconds * bar.kimeBeat);
+				this.nodes.kick.triggerAttackRelease(
+					"C1",
+					"4n",
+					this.resolveAccentTime(bar.kimeBeat, [0, 2], quarterNoteSeconds, time),
+				);
 
-				this.nodes.snare.triggerAttackRelease("8n", time + quarterNoteSeconds * bar.kimeBeat);
+				this.nodes.snare.triggerAttackRelease(
+					"8n",
+					this.resolveAccentTime(bar.kimeBeat, [1, 3], quarterNoteSeconds, time),
+				);
 			}
 		}
 	}
 
 	private randomFrom<T>(values: readonly T[]): T {
 		return values[Math.floor(Math.random() * values.length)] as T;
+	}
+
+	private resolveAccentTime(
+		beat: number,
+		pattern: readonly number[],
+		quarterNoteSeconds: number,
+		barStartTime: number,
+	): number {
+		const accentTime = barStartTime + quarterNoteSeconds * beat;
+
+		if (pattern.includes(beat)) {
+			return accentTime + 0.0001;
+		}
+
+		return accentTime;
 	}
 
 	private requireTone(): ToneModule {
