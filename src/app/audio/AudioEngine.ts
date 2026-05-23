@@ -425,27 +425,28 @@ export class AudioEngine {
 		if (this.trackEnabled.drums) {
 			for (const beat of [0, 2]) {
 				this.nodes.kick.triggerAttackRelease("C1", "8n", time + quarterNoteSeconds * beat);
+				this.addRollNote("drums", 36, startBeat + beat, 0.25);
 			}
 
 			for (const beat of [1, 3]) {
 				this.nodes.snare.triggerAttackRelease("16n", time + quarterNoteSeconds * beat);
+				this.addRollNote("drums", 38, startBeat + beat, 0.2);
 			}
 
 			for (const beat of [0.5, 1, 1.5, 2, 2.5, 3, 3.5]) {
 				this.nodes.hat.triggerAttackRelease("32n", time + quarterNoteSeconds * beat);
+				this.addRollNote("drums", 42, startBeat + beat, 0.1);
 			}
 
 			if (bar.kime) {
-				this.nodes.kick.triggerAttackRelease(
-					"C1",
-					"4n",
-					this.resolveAccentTime(bar.kimeBeat, [0, 2], quarterNoteSeconds, time),
-				);
+				const kickAccentBeat = this.resolveAccentBeat(bar.kimeBeat, [0, 2]);
+				const snareAccentBeat = this.resolveAccentBeat(bar.kimeBeat, [1, 3]);
 
-				this.nodes.snare.triggerAttackRelease(
-					"8n",
-					this.resolveAccentTime(bar.kimeBeat, [1, 3], quarterNoteSeconds, time),
-				);
+				this.nodes.kick.triggerAttackRelease("C1", "4n", this.resolveAccentTime(bar.kimeBeat, [0, 2], quarterNoteSeconds, time));
+				this.addRollNote("drums", 36, startBeat + kickAccentBeat, 0.35);
+
+				this.nodes.snare.triggerAttackRelease("8n", this.resolveAccentTime(bar.kimeBeat, [1, 3], quarterNoteSeconds, time));
+				this.addRollNote("drums", 38, startBeat + snareAccentBeat, 0.25);
 			}
 		}
 	}
@@ -454,12 +455,7 @@ export class AudioEngine {
 		return values[Math.floor(Math.random() * values.length)] as T;
 	}
 
-	private resolveAccentTime(
-		beat: number,
-		pattern: readonly number[],
-		quarterNoteSeconds: number,
-		barStartTime: number,
-	): number {
+	private resolveAccentTime(beat: number, pattern: readonly number[], quarterNoteSeconds: number, barStartTime: number): number {
 		const accentTime = barStartTime + quarterNoteSeconds * beat;
 
 		if (pattern.includes(beat)) {
@@ -467,6 +463,14 @@ export class AudioEngine {
 		}
 
 		return accentTime;
+	}
+
+	private resolveAccentBeat(beat: number, pattern: readonly number[]): number {
+		if (pattern.includes(beat)) {
+			return beat + 0.0001;
+		}
+
+		return beat;
 	}
 
 	private requireTone(): ToneModule {

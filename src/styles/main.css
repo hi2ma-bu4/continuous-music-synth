@@ -21,7 +21,6 @@ body,
 TOP UI
 ====================================================
 */
-
 #menuButton {
     position: fixed;
     top: 14px;
@@ -64,7 +63,16 @@ TOP UI
 }
 
 .panelInner {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
     padding: 72px 16px 120px;
+}
+
+.panelBody {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
 .row {
@@ -94,6 +102,15 @@ input[type="range"] {
     gap: 8px;
 }
 
+.menuFooter {
+    margin-top: auto;
+    padding-top: 20px;
+    color: #8e8e8e;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
 .trackToggle {
     display: flex;
     align-items: center;
@@ -118,19 +135,19 @@ input[type="range"] {
 
 #statusHud {
     position: fixed;
-    top: 16px;
-    right: 16px;
+    top: 12px;
+    right: 12px;
     z-index: 1002;
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: stretch;
 }
 
 .statusCard {
-    min-width: 112px;
-    padding: 10px 12px;
+    min-width: 86px;
+    padding: 7px 9px;
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
+    border-radius: 10px;
     background: rgba(12, 12, 12, 0.72);
     backdrop-filter: blur(10px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.32);
@@ -138,17 +155,18 @@ input[type="range"] {
 
 .statusLabel {
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
     color: #9f9f9f;
-    font-size: 11px;
-    letter-spacing: 0.14em;
+    font-size: 9px;
+    letter-spacing: 0.12em;
 }
 
 .statusValue {
     display: block;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: 700;
     letter-spacing: 0.04em;
+    line-height: 1.1;
 }
 
 /*
@@ -156,7 +174,6 @@ input[type="range"] {
 ROLL
 ====================================================
 */
-
 #playhead {
     position: fixed;
     top: 0;
@@ -221,21 +238,39 @@ ROLL
 COLORS
 ====================================================
 */
+.strings {
+    background: #66ffcc;
+}
 
-.strings { background: #66ffcc; }
-.brass { background: #ffcc44; }
-.wood { background: #66aaff; }
-.lead { background: #ff66cc; }
-.arp { background: #ffffff; }
-.bass { background: #ff6666; }
-.drums { background: #88ff88; }
+.brass {
+    background: #ffcc44;
+}
+
+.wood {
+    background: #66aaff;
+}
+
+.lead {
+    background: #ff66cc;
+}
+
+.arp {
+    background: #ffffff;
+}
+
+.bass {
+    background: #ff6666;
+}
+
+.drums {
+    background: #88ff88;
+}
 
 /*
 ====================================================
 MOBILE
 ====================================================
 */
-
 @media (max-width: 700px) {
     button {
         font-size: 13px;
@@ -251,17 +286,17 @@ MOBILE
     }
 
     #statusHud {
-        top: 66px;
+        top: 62px;
         right: 10px;
-        gap: 8px;
+        gap: 6px;
     }
 
     .statusCard {
-        min-width: 90px;
-        padding: 8px 10px;
+        min-width: 72px;
+        padding: 6px 8px;
     }
 
     .statusValue {
-        font-size: 18px;
+        font-size: 14px;
     }
 }

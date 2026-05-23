@@ -31,43 +31,47 @@ export function renderAppShell(root: HTMLDivElement): void {
 
         <div id="uiPanel">
             <div class="panelInner">
-                <div class="row">
-                    <button id="transportButton">START</button>
-                </div>
+                <div class="panelBody">
+                    <div class="row">
+                        <button id="transportButton">START</button>
+                    </div>
 
-                <div class="row">
-                    <label>
+                    <div class="row">
+                        <label>
+                            <input
+                                type="checkbox"
+                                id="autoModulate"
+                                checked
+                            >
+                            自動転調
+                        </label>
+                    </div>
+
+                    <div class="row">
+                        ROOT
+
                         <input
-                            type="checkbox"
-                            id="autoModulate"
-                            checked
+                            type="range"
+                            id="rootSlider"
+                            min="36"
+                            max="60"
+                            value="48"
                         >
-                        自動転調
-                    </label>
-                </div>
 
-                <div class="row">
-                    ROOT
+                        <div
+                            id="rootValue"
+                            class="value"
+                        >
+                            48
+                        </div>
+                    </div>
 
-                    <input
-                        type="range"
-                        id="rootSlider"
-                        min="36"
-                        max="60"
-                        value="48"
-                    >
-
-                    <div
-                        id="rootValue"
-                        class="value"
-                    >
-                        48
+                    <div class="legend">
+                        ${legend}
                     </div>
                 </div>
 
-                <div class="legend">
-                    ${legend}
-                </div>
+                <div class="menuFooter">&copy; 2026 <a href="https://github.com/hi2ma-bu4" target="_blank">hi2ma-bu4</a> all rights reserved.</div>
             </div>
         </div>
 
